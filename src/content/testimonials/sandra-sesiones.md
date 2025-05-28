@@ -1,0 +1,27 @@
+---
+name: "Sandra"
+avatar: "🌺"
+order: 4
+messages:
+  - sender: "client"
+    text: "Caro, nuestras sesiones 1:1 han sido un antes y después"
+    time: "11:30"
+  - sender: "client"
+    text: "En solo 3 sesiones sané heridas de la infancia que tenía hace 30 años"
+    time: "11:31"
+  - sender: "carolina"
+    text: "Sandra hermosa, tu valentía para ir tan profundo ha sido increíble 💪"
+    time: "11:33"
+  - sender: "client"
+    text: "Por primera vez en mi vida me siento LIBRE"
+    time: "11:35"
+  - sender: "client"
+    text: "Mi familia nota el cambio, mis amigos me preguntan qué hice"
+    time: "11:36"
+  - sender: "client"
+    text: "¡Ya les di tu contacto a 3 personas! 😂"
+    time: "11:37"
+  - sender: "carolina"
+    text: "Jajaja eres la mejor 😍 Me da tanta alegría verte brillar así"
+    time: "11:40"
+---

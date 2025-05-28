@@ -1,1 +1,47 @@
 @import "tailwindcss";
+
+/* global.css - Colores Profesionales Carolina Trujillo */
+:root {
+  --primary: #9B5DE5;
+  --secondary: #F15BB5;
+  --accent: #00BBF9;
+  --warm: #F59E0B;
+  --text-dark: #2D2D2D;
+  --text-medium: #6B7280;
+  --text-light: #9CA3AF;
+  --bg-soft: #F8FAFC;
+  --bg-white: #FFFFFF;
+}
+
+/* Clases profesionales para Tailwind */
+.bg-primary { background: var(--primary); }
+.bg-secondary { background: var(--secondary); }
+.bg-accent { background: var(--accent); }
+.bg-warm { background: var(--warm); }
+.bg-soft { background: var(--bg-soft); }
+
+.text-primary { color: var(--primary); }
+.text-secondary { color: var(--secondary); }
+.text-accent { color: var(--accent); }
+.text-warm { color: var(--warm); }
+
+.border-primary { border-color: var(--primary); }
+
+.gradient-soft { 
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+}
+
+.shadow-soft {
+  box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.2);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem; 
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 4rem;
+  }
+}

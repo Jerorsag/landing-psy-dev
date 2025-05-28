@@ -1,0 +1,196 @@
+---
+import "../styles/global.css"
+import { Check } from '@lucide/astro';
+---
+
+<section id="contacto" class="py-20 bg-white">
+  <div class="max-w-2xl mx-auto px-6">
+    
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-gray-900 mb-4">Contáctame</h2>
+      <p class="text-xl text-gray-600">Completa el formulario y me pondré en contacto contigo.</p>
+    </div>
+
+    <!-- Success Message -->
+    <div id="success-message" class="hidden bg-green-50 border border-green-200 rounded-2xl p-6 mb-8">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+          <Check class="w-5 h-5 text-white" />
+        </div>
+        <div>
+          <h3 class="font-bold text-green-800">¡Mensaje enviado con éxito!</h3>
+          <p class="text-green-700" id="success-text"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulario -->
+    <div class="bg-soft rounded-3xl p-8 shadow-lg" id="form-container">
+      <form id="contact-form" class="space-y-6">
+        
+        <!-- Nombre -->
+        <div>
+          <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Nombre Completo</label>
+          <input 
+            type="text" 
+            id="name" 
+            class="w-full px-4 py-4 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-white shadow-2xs"
+            placeholder="Tu nombre completo"
+          >
+          <span class="error-text text-red-500 text-sm hidden"></span>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Correo Electrónico</label>
+          <input 
+            type="email" 
+            id="email" 
+            class="w-full px-4 py-4 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-white shadow-2xs"
+            placeholder="tu@email.com"
+          >
+          <span class="error-text text-red-500 text-sm hidden"></span>
+        </div>
+
+        <!-- Teléfono -->
+        <div>
+          <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Teléfono</label>
+          <input 
+            type="tel" 
+            id="phone" 
+            class="w-full px-4 py-4 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-white shadow-2xs"
+            placeholder="+57 300 123 4567"
+          >
+          <span class="error-text text-red-500 text-sm hidden"></span>
+        </div>
+
+        <!-- Mensaje -->
+        <div>
+          <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">Mensaje</label>
+          <textarea 
+            id="message" 
+            rows="4"
+            class="w-full px-4 py-4 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-white shadow-2xs resize-none"
+            placeholder="Escribe tu mensaje aquí..."
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          class="w-full bg-secondary text-white py-4 rounded-xl font-bold text-lg hover:bg-pink-600 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
+        >
+          Enviar Mensaje
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+function initContactForm() {
+    const form = document.getElementById('contact-form');
+    const inputs = form.querySelectorAll('input, textarea');
+    
+    // Validación en vivo
+    inputs.forEach(input => {
+        input.addEventListener('input', () => validateField(input));
+        input.addEventListener('blur', () => validateField(input));
+    });
+    
+    // Envío del formulario
+    form.addEventListener('submit', handleSubmit);
+}
+
+function validateField(input) {
+    const value = input.value.trim();
+    const errorSpan = input.parentNode.querySelector('.error-text');
+    let isValid = true;
+    let message = '';
+    
+    // Validaciones específicas
+    if (input.id === 'name' && !value) {
+        isValid = false;
+        message = 'El nombre es obligatorio';
+    } else if (input.id === 'email') {
+        if (!value) {
+            isValid = false;
+            message = 'El email es obligatorio';
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+            isValid = false;
+            message = 'Email inválido';
+        }
+    } else if (input.id === 'phone' && !value) {
+        isValid = false;
+        message = 'El teléfono es obligatorio';
+    }
+    
+    // Aplicar estilos
+    if (isValid) {
+        input.classList.remove('border-red-500');
+        input.classList.add('border-green-500');
+        errorSpan.classList.add('hidden');
+    } else {
+        input.classList.remove('border-green-500');
+        input.classList.add('border-red-500');
+        errorSpan.textContent = message;
+        errorSpan.classList.remove('hidden');
+    }
+    
+    return isValid;
+}
+
+function handleSubmit(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const phone = document.getElementById('phone');
+    const message = document.getElementById('message');
+    
+    // Validar todos los campos
+    const isNameValid = validateField(name);
+    const isEmailValid = validateField(email);
+    const isPhoneValid = validateField(phone);
+    
+    if (isNameValid && isEmailValid && isPhoneValid) {
+        // Capturar datos
+        const formData = {
+            nombre: name.value.trim(),
+            email: email.value.trim(),
+            telefono: phone.value.trim(),
+            mensaje: message.value.trim() || 'Sin mensaje'
+        };
+        
+        console.log('Datos del formulario:', formData);
+        
+        // Mostrar mensaje de éxito
+        showSuccess(formData.nombre);
+        
+        // Resetear formulario
+        document.getElementById('contact-form').reset();
+        document.querySelectorAll('input, textarea').forEach(input => {
+            input.classList.remove('border-green-500', 'border-red-500');
+        });
+    }
+}
+
+function showSuccess(userName) {
+    const successMessage = document.getElementById('success-message');
+    const successText = document.getElementById('success-text');
+    const formContainer = document.getElementById('form-container');
+    
+    successText.textContent = `Gracias ${userName}, te contactaré pronto.`;
+    successMessage.classList.remove('hidden');
+    formContainer.classList.add('hidden');
+    
+    // Ocultar mensaje después de 5 segundos y mostrar formulario
+    setTimeout(() => {
+        successMessage.classList.add('hidden');
+        formContainer.classList.remove('hidden');
+    }, 5000);
+}
+
+document.addEventListener('DOMContentLoaded', initContactForm);
+</script>

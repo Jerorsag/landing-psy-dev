@@ -1,0 +1,128 @@
+---
+import "../styles/global.css"
+import { Lightbulb, MessageCircleMore, Menu } from '@lucide/astro';
+---
+
+<header class="fixed top-0 w-full bg-white/95 backdrop-blur-lg border-b border-gray-100 z-50 shadow-sm">
+  <nav class="max-w-6xl mx-auto px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      
+      <!-- Logo Profesional -->
+      <div class="flex items-center space-x-3">
+        <div class="w-12 h-12 gradient-soft rounded-xl flex items-center justify-center shadow-soft">
+          <Lightbulb class="w-7 h-7 text-white"/>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold text-gray-900">Carolina Trujillo</h1>
+          <p class="text-sm font-medium text-primary">Psicóloga Cuántica</p>
+        </div>
+      </div>
+
+      <!-- Navigation Clean -->
+      <div class="hidden lg:flex items-center space-x-8">
+        <a href="#servicios" class="text-gray-700 hover:text-primary font-medium transition-colors duration-300 relative group">
+          Servicios
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="#testimonios" class="text-gray-700 hover:text-primary font-medium transition-colors duration-300 relative group">
+          Testimonios
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="#contacto" class="text-gray-700 hover:text-primary font-medium transition-colors duration-300 relative group">
+          Contacto
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+        </a>
+      </div>
+
+      <!-- CTA Elegante -->
+      <div class="hidden md:block">
+        <a href="#contacto" class="bg-secondary text-white px-6 py-3 rounded-xl font-semibold hover:bg-pink-600 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex items-center space-x-2">
+          <MessageCircleMore class="w-5 h-5">
+          <span>Agenda tu Sesión</span>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+        <Menu class="w-6 h-6 text-gray-700 cursor-pointer" />
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden lg:hidden absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+      <div class="p-4 space-y-2">
+        <a href="#servicios" class="block px-4 py-3 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg font-medium transition-all duration-200">
+          Servicios
+        </a>
+        <a href="#testimonios" class="block px-4 py-3 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg font-medium transition-all duration-200">
+          Testimonios
+        </a>
+        <a href="#contacto" class="block px-4 py-3 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg font-medium transition-all duration-200">
+          Contacto
+        </a>
+        
+        <!-- CTA solo en móvil -->
+        <div class="sm:hidden pt-2 border-t border-gray-100">
+          <a href="#contacto" class="bg-secondary text-white px-6 py-3 rounded-xl font-semibold hover:bg-pink-600 hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 w-full">
+            <MessageCircleMore class="w-5 h-5"/>
+            <span>Agenda tu Sesión</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Spacer -->
+<div class="h-20"></div>
+
+<script>
+  // Variables globales
+  let mobileMenuOpen = false;
+
+  function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    
+    if (!menu) return;
+    
+    if (mobileMenuOpen) {
+      // Cerrar menú
+      menu.classList.add('hidden');
+      mobileMenuOpen = false;
+    } else {
+      // Abrir menú
+      menu.classList.remove('hidden');
+      mobileMenuOpen = true;
+    }
+  }
+
+  // Inicializar cuando cargue la página
+  document.addEventListener('DOMContentLoaded', function() {
+    // Cerrar menú al hacer click en enlaces
+    const menuLinks = document.querySelectorAll('#mobileMenu a');
+    
+    menuLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        const menu = document.getElementById('mobileMenu');
+        if (menu) {
+          menu.classList.add('hidden');
+          mobileMenuOpen = false;
+        }
+      });
+    });
+
+    // Cerrar menú al hacer click fuera
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById('mobileMenu');
+      const button = e.target.closest('button');
+      
+      // Si no se hizo click en el botón del menú y el menú está abierto
+      if (!button && mobileMenuOpen && menu) {
+        menu.classList.add('hidden');
+        mobileMenuOpen = false;
+      }
+    });
+  });
+  
+document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+</script>

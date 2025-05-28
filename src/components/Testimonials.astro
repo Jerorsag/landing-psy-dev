@@ -1,0 +1,221 @@
+---
+import "../styles/global.css"
+import {ChevronLeft , ChevronRight } from '@lucide/astro';
+import { getCollection } from 'astro:content';
+
+const testimonials = await getCollection('testimonials');
+const sortedTestimonials = testimonials.sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="testimonios" class="py-20 bg-soft">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    
+    <!-- Header -->
+    <div class="text-center mb-4">
+      <div class="inline-flex items-center space-x-3 bg-white/80 backdrop-blur-sm rounded-full px-6 py-3 mb-6 shadow-sm">
+        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+        <span class="text-sm font-semibold text-gray-700">Testimonios Reales</span>
+      </div>
+      
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+        Lo que Dicen mis <span class="text-primary">Clientes</span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Conversaciones reales de WhatsApp que muestran transformaciones increíbles.
+      </p>
+    </div>
+
+    <!-- Carousel -->
+    <div class="relative max-w-6xl mx-auto">
+      <div class="overflow-hidden rounded-3xl">
+        <div class="flex transition-transform duration-500 ease-out" id="carousel">
+          {sortedTestimonials.map((testimonial) => {
+            const { data } = testimonial;
+            const {avatar, name, messages} = data;
+            
+            return (
+              <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 p-4">
+                <div class="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full">
+                  
+                  <!-- Phone Header -->
+                  <div class="bg-gray-50 rounded-t-3xl p-6 border-b">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-xl">
+                          {avatar}
+                        </div>
+                        <div>
+                          <h3 class="font-bold text-gray-900">{name}</h3>
+                          <p class="text-xs text-green-500">● en línea</p>
+                        </div>
+                      </div>
+                      <div class="text-gray-400">⋯</div>
+                    </div>
+                  </div>
+
+                  <!-- Messages -->
+                  <div class="p-6 space-y-3 h-96 overflow-y-auto">
+                    {messages.map((message) => (
+                      <div class={`flex ${message.sender === 'carolina' ? 'justify-end' : 'justify-start'}`}>
+                        <div class={`max-w-[80%] px-4 py-2 rounded-2xl text-sm ${
+                          message.sender === 'carolina' 
+                            ? 'bg-gray-100 text-gray-800 rounded-bl-md' 
+                            : 'bg-primary text-white rounded-br-md'
+                        }`}>
+                          <p class="leading-relaxed">{message.text}</p>
+                          <div class={`text-xs mt-1 text-right ${
+                            message.sender === 'carolina' ? 'text-gray-500' : 'text-white/70'
+                          }`}>
+                            {message.time}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <button class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg cursor-pointer transition-all z-10" id="prev">
+        <ChevronLeft class="w-6 h-6 mx-auto text-gray-600" />
+      </button>
+      
+      <button class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg cursor-pointer transition-all z-10" id="next">
+        <ChevronRight class="w-6 h-6 mx-auto text-gray-600" />
+      </button>
+    </div>
+
+    <!-- Indicators -->
+    <div class="flex justify-center mt-8 space-x-2" id="indicators">
+      {sortedTestimonials.map((_, index) => (
+        <button class={`w-3 h-3 rounded-full transition-all ${index === 0 ? 'bg-primary' : 'bg-gray-300'}`} data-index={index}></button>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    
+  </div>
+</section>
+
+<script>
+// Inicializa el carrusel de testimonios
+function initTestimonialsCarousel() {
+    const carousel = document.getElementById('carousel');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const indicators = document.querySelectorAll('#indicators button');
+    
+    if (!carousel || indicators.length === 0) return;
+    
+    let currentSlide = 0;
+    let autoplayInterval;
+    let isSliding = false; // Bandera para evitar múltiples clics rápidos
+    
+    // Función para obtener slides visibles según pantalla
+    function getSlidesPerView() {
+        if (window.innerWidth < 768) return 1;
+        if (window.innerWidth < 1024) return 2;
+        return 3;
+    }
+    
+    // Función para mostrar un testimonio específico
+    function showSlide(index) {
+        if (isSliding) return;
+        isSliding = true;
+        
+        // Actualizar índice actual
+        currentSlide = index;
+        
+        // Calcular translateX basado en slides visibles
+        const slideWidth = 100 / getSlidesPerView();
+        const translateX = -(index * slideWidth);
+        
+        // Animar carousel
+        carousel.style.transform = `translateX(${translateX}%)`;
+        
+        // Actualizar indicadores
+        indicators.forEach((indicator, i) => {
+            indicator.className = `w-3 h-3 rounded-full transition-all ${
+                i === index ? 'bg-primary' : 'bg-gray-300'
+            }`;
+        });
+        
+        // Permitir siguiente animación cuando termine la actual
+        setTimeout(() => {
+            isSliding = false;
+        }, 500); // Coincide con la duración de la transición CSS
+    }
+    
+    // Función para ir al siguiente slide
+    function nextSlide() {
+        const nextIndex = (currentSlide + 1) % indicators.length;
+        showSlide(nextIndex);
+    }
+    
+    // Función para ir al slide anterior
+    function prevSlide() {
+        const prevIndex = currentSlide === 0 ? indicators.length - 1 : currentSlide - 1;
+        showSlide(prevIndex);
+    }
+    
+    // Eventos de navegación con botones
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+            if (currentSlide !== (currentSlide === 0 ? indicators.length - 1 : currentSlide - 1)) {
+                prevSlide();
+                // Reiniciar autoplay
+                clearInterval(autoplayInterval);
+                startAutoplay();
+            }
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            const nextIndex = (currentSlide + 1) % indicators.length;
+            if (currentSlide !== nextIndex) {
+                nextSlide();
+                // Reiniciar autoplay
+                clearInterval(autoplayInterval);
+                startAutoplay();
+            }
+        });
+    }
+    
+    // Eventos de navegación con indicadores
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', function() {
+            // Mostrar slide si no estamos en ese índice ya
+            if (index !== currentSlide) {
+                showSlide(index);
+                // Reiniciar el temporizador de autoplay
+                clearInterval(autoplayInterval);
+                startAutoplay();
+            }
+        });
+    });
+    
+    // Función para iniciar autoplay
+    function startAutoplay() {
+        autoplayInterval = setInterval(() => {
+            nextSlide();
+        }, 5000); // Cambia cada 5 segundos
+    }
+    
+    // Responsive: recalcular cuando cambie el tamaño de pantalla
+    window.addEventListener('resize', function() {
+        showSlide(currentSlide);
+    });
+    
+    // Inicializar
+    showSlide(0);
+    startAutoplay();
+}
+
+// Inicializar cuando el DOM esté cargado
+document.addEventListener('DOMContentLoaded', initTestimonialsCarousel);
+</script>

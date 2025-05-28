@@ -1,0 +1,27 @@
+---
+name: "María Elena"
+avatar: "🌸"
+order: 1
+messages:
+  - sender: "client"
+    text: "Carolina, no puedo creer lo que está pasando en mi vida 😭✨"
+    time: "14:23"
+  - sender: "client"
+    text: "Desde que empecé el taller psicocuántico TODO cambió"
+    time: "14:24"
+  - sender: "carolina"
+    text: "¡María! Me encanta escuchar eso 💖 Cuéntame qué específicamente has notado"
+    time: "14:25"
+  - sender: "client"
+    text: "Primero, mi relación con mi pareja mejoró un 100%. Ya no discutimos como antes"
+    time: "14:26"
+  - sender: "client"
+    text: "Segundo, conseguí el trabajo que tanto quería!!! 🎉"
+    time: "14:27"
+  - sender: "client"
+    text: "Y lo más increíble... me siento en PAZ conmigo misma"
+    time: "14:28"
+  - sender: "carolina"
+    text: "¡Eso es HERMOSO María! 🌟 Lo que lograste es el resultado de tu compromiso con el proceso"
+    time: "14:30"
+---

@@ -1,0 +1,68 @@
+---
+import "../styles/global.css"
+import {Heart, Lightbulb, Zap, Sun } from '@lucide/astro';
+---
+
+<section id="beneficios" class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+    
+    <!-- Header de la sección -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        ¿Cómo puedo ayudarte?
+      </h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Descubre los beneficios únicos de trabajar conmigo y cómo la psicología cuántica 
+        puede transformar tu vida de manera profunda y duradera.
+      </p>
+    </div>
+
+    <!-- Grid de beneficios -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- Beneficio 1 -->
+      <div class="group bg-soft rounded-2xl p-6 hover:bg-white hover:shadow-lg border border-gray-100 hover:border-primary/20 transition-all duration-300">
+        <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary group-hover:shadow-soft transition-all duration-300">
+          <Heart class="w-5 h-5 text-primary group-hover:text-white transition-colors duration-300" />
+        </div>
+        <h3 class="font-bold text-gray-900 mb-2">Sanación Emocional</h3>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          Libérate de traumas y patrones emocionales que limitan tu crecimiento personal.
+        </p>
+      </div>
+
+      <!-- Beneficio 2 -->
+      <div class="group bg-soft rounded-2xl p-6 hover:bg-white hover:shadow-lg border border-gray-100 hover:border-primary/20 transition-all duration-300">
+        <div class="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-secondary group-hover:shadow-soft transition-all duration-300">
+          <Lightbulb class="w-5 h-5 text-secondary group-hover:text-white transition-colors duration-300" />
+        </div>
+        <h3 class="font-bold text-gray-900 mb-2">Despertar Cuántico</h3>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          Conecta con tu verdadero potencial y transforma tu realidad desde el nivel cuántico.
+        </p>
+      </div>
+
+      <!-- Beneficio 3 -->
+      <div class="group bg-soft rounded-2xl p-6 hover:bg-white hover:shadow-lg border border-gray-100 hover:border-primary/20 transition-all duration-300">
+        <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-accent group-hover:shadow-soft transition-all duration-300">
+          <Zap class="w-5 h-5 text-accent group-hover:text-white transition-colors duration-300" />
+        </div>
+        <h3 class="font-bold text-gray-900 mb-2">Propósito de Vida</h3>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          Descubre tu misión única y alinea tus acciones con tu verdadero propósito.
+        </p>
+      </div>
+
+      <!-- Beneficio 4 -->
+      <div class="group bg-soft rounded-2xl p-6 hover:bg-white hover:shadow-lg border border-gray-100 hover:border-primary/20 transition-all duration-300">
+        <div class="w-12 h-12 bg-warm/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-warm group-hover:shadow-soft transition-all duration-300">
+          <Sun class="w-5 h-5 text-warm group-hover:text-white transition-colors duration-300" />
+        </div>
+        <h3 class="font-bold text-gray-900 mb-2">Equilibrio Interior</h3>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          Encuentra armonía entre mente, cuerpo y espíritu para vivir en plenitud.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
