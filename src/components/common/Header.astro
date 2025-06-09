@@ -1,5 +1,5 @@
 ---
-import "../styles/global.css"
+import "../../styles/global.css"
 import { Lightbulb, MessageCircleMore, Menu } from '@lucide/astro';
 ---
 
@@ -8,15 +8,17 @@ import { Lightbulb, MessageCircleMore, Menu } from '@lucide/astro';
     <div class="flex justify-between items-center h-20">
       
       <!-- Logo Profesional -->
-      <div class="flex items-center space-x-3">
-        <div class="w-12 h-12 gradient-soft rounded-xl flex items-center justify-center shadow-soft">
-          <Lightbulb class="w-7 h-7 text-white"/>
+      <a href="/" class="transition-all duration-300 hover:opacity-90">
+        <div class="flex items-center space-x-3 cursor-pointer">
+          <div class="w-12 h-12 gradient-soft rounded-xl flex items-center justify-center shadow-soft">
+            <Lightbulb class="w-7 h-7 text-white"/>
+          </div>
+          <div>
+            <h1 class="text-xl font-bold text-gray-900">Carolina Trujillo</h1>
+            <p class="text-sm font-medium text-primary">Psicóloga Cuántica</p>
+          </div>
         </div>
-        <div>
-          <h1 class="text-xl font-bold text-gray-900">Carolina Trujillo</h1>
-          <p class="text-sm font-medium text-primary">Psicóloga Cuántica</p>
-        </div>
-      </div>
+      </a>
 
       <!-- Navigation Clean -->
       <div class="hidden lg:flex items-center space-x-8">
@@ -28,8 +30,8 @@ import { Lightbulb, MessageCircleMore, Menu } from '@lucide/astro';
           Testimonios
           <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
         </a>
-        <a href="#contacto" class="text-gray-700 hover:text-primary font-medium transition-colors duration-300 relative group">
-          Contacto
+        <a href="/sobre-mi" class="text-gray-700 hover:text-primary font-medium transition-colors duration-300 relative group">
+          Sobre Mi
           <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
         </a>
       </div>

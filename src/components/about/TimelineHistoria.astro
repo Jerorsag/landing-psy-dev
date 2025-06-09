@@ -1,0 +1,90 @@
+---
+import "../../styles/global.css"
+import { getCollection } from 'astro:content';
+
+const timelineEntries = await getCollection('timeline');
+const sortedTimeline = timelineEntries.sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="mi-historia" class="py-16 bg-soft">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+    
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Mi Historia de 
+        <span class="text-primary">Transformación</span>
+      </h2>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        Cada desafío me llevó a recordar mi esencia y a convertirme en quien soy hoy. 
+        Te comparto los momentos que marcaron mi camino de evolución.
+      </p>
+    </div>
+
+    <!-- Timeline Container -->
+    <div class="relative">
+      <!-- Línea central del timeline (solo desktop) -->
+      <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary via-secondary to-accent hidden lg:block"></div>
+      
+      <!-- Timeline Items -->
+      <div class="space-y-12 lg:space-y-16">
+        {sortedTimeline.map((entry, index) => {
+          const { data } = entry;
+          const { year, icon, title, subtitle, content, frase } = data;
+          const isEven = index % 2 === 0;
+          
+          return (
+        <div class={`relative flex items-center ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} group`}>
+          
+          <!-- Timeline Dot Professional -->
+          <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-primary to-secondary rounded-full shadow-lg z-10 hidden lg:block group-hover:scale-125 transition-all duration-500"></div>
+          
+          <!-- Info Card Premium -->
+          <div class={`w-full lg:w-4/10 ${isEven ? 'lg:pr-12' : 'lg:pl-12'}`}>
+            <div class="relative bg-white rounded-xl p-10 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-500 group-hover:-translate-y-1">
+              
+              <!-- Year Badge Clean -->
+              <div class="inline-flex items-center space-x-3 bg-gray-50 px-6 py-3 rounded-xl mb-8">
+                <span class="text-2xl font-bold text-primary">{year}</span>
+              </div>
+              
+              <!-- Content -->
+              <div class="space-y-6">
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors duration-300">
+                  {title}
+                </h3>
+                
+                <p class="text-lg font-semibold text-gray-600">
+                  {subtitle}
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Historia Executive -->
+          <div class={`w-full lg:w-6/10 ${isEven ? 'lg:pl-12' : 'lg:pr-12'} mt-8 lg:mt-0`}>
+            <div class="bg-white rounded-xl p-10 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-500 group-hover:-translate-y-1">
+              
+              <!-- Historia Principal -->
+              <div class="mb-8">
+                <p class="text-gray-800 text-lg leading-relaxed font-medium">
+                  {content}
+                </p>
+              </div>
+              
+              <!-- Quote Clean Style -->
+              <div class="bg-gray-50 rounded-lg p-8 border-l-4 border-primary">
+                <blockquote class="text-lg font-semibold text-gray-800 italic">
+                  "{frase}"
+                </blockquote>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+          )
+        })}
+      </div>
+    </div>
+  </div>
+</section>

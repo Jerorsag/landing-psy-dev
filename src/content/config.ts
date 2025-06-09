@@ -29,7 +29,21 @@ const testimonials = defineCollection({
   }),
 });
 
+const timeline = defineCollection({
+  type: 'content',
+  schema: z.object({
+    year: z.string(),
+    icon: z.string(),
+    title: z.string(),
+    subtitle: z.string(),
+    content: z.string(),
+    frase: z.string(),
+    order: z.number(),
+  }),
+});
+
 export const collections = {
   services,
   testimonials,
+  timeline
 };
