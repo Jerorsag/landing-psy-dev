@@ -40,7 +40,7 @@ const sortedTimeline = timelineEntries.sort((a, b) => a.data.order - b.data.orde
           
           <!-- Info Card Premium -->
           <div class={`w-full lg:w-4/10 ${isEven ? 'lg:pr-12' : 'lg:pl-12'}`}>
-            <div class="relative bg-white rounded-xl p-10 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-500 group-hover:-translate-y-1">
+            <div class="mobile-year-card relative bg-white rounded-xl p-10 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-500 group-hover:-translate-y-1 cursor-pointer lg:cursor-default" data-target={`content-${year}`}>
               
               <!-- Year Badge Clean -->
               <div class="inline-flex items-center space-x-3 bg-gray-50 px-6 py-3 rounded-xl mb-8">
@@ -61,7 +61,7 @@ const sortedTimeline = timelineEntries.sort((a, b) => a.data.order - b.data.orde
           </div>
           
           <!-- Historia Executive -->
-          <div class={`w-full lg:w-6/10 ${isEven ? 'lg:pl-12' : 'lg:pr-12'} mt-8 lg:mt-0`}>
+          <div class={`hidden lg:block w-full lg:w-6/10 ${isEven ? 'lg:pl-12' : 'lg:pr-12'} mt-8 lg:mt-0`}>
             <div class="bg-white rounded-xl p-10 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-500 group-hover:-translate-y-1">
               
               <!-- Historia Principal -->
@@ -85,6 +85,27 @@ const sortedTimeline = timelineEntries.sort((a, b) => a.data.order - b.data.orde
         })}
       </div>
     </div>
+
+    <!-- Modal Mobile -->
+    <div id="mobile-modal" class="lg:hidden fixed inset-0 bg-opacity-80 backdrop-blur-sm z-50 hidden">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-xl max-w-lg w-full max-h-[80vh] overflow-y-auto">
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 id="modal-year" class="text-xl font-bold text-primary"></h3>
+              <button id="close-modal" class="text-gray-400 hover:text-gray-600 cursor-pointer">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <div id="modal-content" class="space-y-4">
+              <!-- Content will be inserted here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -98,6 +119,13 @@ const sortedTimeline = timelineEntries.sort((a, b) => a.data.order - b.data.orde
   .timeline-item.animate {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* Mobile modal styles */
+  @media (max-width: 1023px) {
+    .mobile-year-card:hover {
+      transform: translateY(-2px);
+    }
   }
 </style>
 
@@ -114,15 +142,66 @@ const sortedTimeline = timelineEntries.sort((a, b) => a.data.order - b.data.orde
 
     const timelineItems = document.querySelectorAll('.timeline-item');
     timelineItems.forEach((item) => {
-      // Limpiar animaciones previas
       item.classList.remove('animate');
       observer.observe(item);
     });
   }
 
-  // Ejecutar al cargar la página
-  document.addEventListener('DOMContentLoaded', initTimelineAnimations);
+  function initMobileModal() {
+    const yearCards = document.querySelectorAll('.mobile-year-card');
+    const modal = document.getElementById('mobile-modal');
+    const modalYear = document.getElementById('modal-year');
+    const modalContent = document.getElementById('modal-content');
+    const closeModal = document.getElementById('close-modal');
+
+    yearCards.forEach(card => {
+      card.addEventListener('click', function(e) {
+        if (window.innerWidth >= 1024) return; // Solo en mobile
+        
+        const timelineItem = this.closest('.timeline-item');
+        const year = timelineItem.dataset.year;
+        const contentText = timelineItem.querySelector('.text-gray-800').textContent;
+        const quote = timelineItem.querySelector('blockquote').textContent;
+        
+        modalYear.textContent = year;
+        modalContent.innerHTML = `
+          <div class="mb-4">
+            <p class="text-gray-800 text-base leading-relaxed font-medium">
+              ${contentText}
+            </p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-primary">
+            <blockquote class="text-base font-semibold text-gray-800 italic">
+              ${quote}
+            </blockquote>
+          </div>
+        `;
+        
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    closeModal.addEventListener('click', function() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    });
+
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initTimelineAnimations();
+    initMobileModal();
+  });
   
-  // Ejecutar después de cada navegación con View Transitions
-  document.addEventListener('astro:page-load', initTimelineAnimations);
+  document.addEventListener('astro:page-load', () => {
+    initTimelineAnimations();
+    initMobileModal();
+  });
 </script>
