@@ -1,5 +1,4 @@
 ---
-import "../../styles/global.css"
 import { getCollection } from 'astro:content';
 
 const timelineEntries = await getCollection('timeline');
@@ -34,7 +33,7 @@ const sortedTimeline = timelineEntries.sort((a, b) => a.data.order - b.data.orde
           const isEven = index % 2 === 0;
           
           return (
-        <div class={`relative flex items-center ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} group`}>
+        <div class={`timeline-item relative flex items-center ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} group`} data-year={year}>
           
           <!-- Timeline Dot Professional -->
           <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-primary to-secondary rounded-full shadow-lg z-10 hidden lg:block group-hover:scale-125 transition-all duration-500"></div>
@@ -88,3 +87,42 @@ const sortedTimeline = timelineEntries.sort((a, b) => a.data.order - b.data.orde
     </div>
   </div>
 </section>
+
+<style>
+  .timeline-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+  }
+
+  .timeline-item.animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  function initTimelineAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    timelineItems.forEach((item) => {
+      // Limpiar animaciones previas
+      item.classList.remove('animate');
+      observer.observe(item);
+    });
+  }
+
+  // Ejecutar al cargar la página
+  document.addEventListener('DOMContentLoaded', initTimelineAnimations);
+  
+  // Ejecutar después de cada navegación con View Transitions
+  document.addEventListener('astro:page-load', initTimelineAnimations);
+</script>
