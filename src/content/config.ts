@@ -6,11 +6,13 @@ const services = defineCollection({
     title: z.string(),
     subtitle: z.string(),
     duration: z.string(),
+    modalidad: z.string(),
     featured: z.boolean().default(false),
-    icon: z.string(),
-    benefits: z.array(z.string()),
     order: z.number(),
     highlight: z.string(),
+    precio: z.string(),
+    cta: z.string(),
+    beneficios: z.array(z.string()),
   }),
 });
 

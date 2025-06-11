@@ -1,0 +1,144 @@
+---
+import "../../styles/global.css"
+import { Clock, Check, Star, Users, BookOpen, Heart } from '@lucide/astro';
+import { getCollection } from 'astro:content';
+
+const services = await getCollection('services');
+const sortedServices = services.sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="mis-servicios" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center space-x-2 bg-soft rounded-full px-6 py-3 mb-6 shadow-sm border border-gray-100">
+        <div class="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+        <span class="text-sm font-semibold text-gray-700">Mis Servicios Profesionales</span>
+      </div>
+      
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+        Elige tu <span class="text-primary">Camino de Transformación</span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-4xl mx-auto">
+        Ofrezco diferentes modalidades para que encuentres el acompañamiento que mejor se adapte 
+        a tu momento actual y necesidades de crecimiento personal.
+      </p>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="grid lg:grid-cols-3 gap-8 mb-16">
+      
+      {sortedServices.map((service) => {
+        const { data } = service;
+        const { title, subtitle, duration, modalidad, featured, highlight, precio, cta, beneficios } = data;
+
+        return (
+          <div class="group relative">
+            
+            {/* Badge "Más Popular" */}
+            {featured && (
+              <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                <div class="bg-gradient-to-r from-amber-400 to-yellow-600 animate-[hue-rotate_2s_linear_infinite] text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
+                  <Star class="w-4 h-4 inline mr-1" />
+                  Más Popular
+                </div>
+              </div>
+            )}
+            
+            <div class={`${featured ? 'bg-gradient-to-br from-secondary/5 to-primary/5 shadow-2xl shadow-secondary/20 scale-105' : 'bg-white shadow-lg'} rounded-2xl p-8 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 h-full flex flex-col`}>
+              
+              <!-- Header del servicio -->
+              <div class="mb-6">
+                <div class="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Heart class="w-8 h-8 text-white" />
+                </div>
+                
+                <h3 class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors duration-300">
+                  {title}
+                </h3>
+                
+                <p class="text-lg text-gray-600 font-medium mb-4">
+                  {subtitle}
+                </p>
+                
+                <!-- Precio o Consultar -->
+                <div class="bg-white rounded-xl p-4 shadow-md mb-4">
+                  <div class="text-center">
+                    <div class={`text-2xl font-bold ${precio === "Consultar" ? 'text-primary' : 'text-secondary'} mb-1`}>
+                      {precio}
+                    </div>
+                    <div class="text-sm text-gray-500">
+                      {precio === "Consultar" ? "Precio personalizado" : "Inversión completa"}
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Duración y modalidad -->
+                <div class="space-y-2 mb-6">
+                  <div class="flex items-center text-gray-500 text-sm">
+                    <Clock class="w-4 h-4 mr-2 text-primary" />
+                    <span>{duration}</span>
+                  </div>
+                  <div class="flex items-center text-gray-500 text-sm">
+                    <Users class="w-4 h-4 mr-2 text-primary" />
+                    <span>{modalidad}</span>
+                  </div>
+                </div>
+                
+                <!-- Destacado -->
+                <div class="bg-primary/5 rounded-xl p-4 mb-6 border-l-4 border-primary">
+                  <p class="text-primary font-semibold text-sm italic leading-relaxed">
+                    "{highlight}"
+                  </p>
+                </div>
+              </div>
+
+              <!-- Beneficios principales -->
+              <div class="flex-1 mb-8">
+                <h4 class="font-bold text-gray-900 mb-4 text-lg">¿Qué incluye?</h4>
+                <ul class="space-y-3">
+                  {beneficios && beneficios.slice(0, 5).map((beneficio) => (
+                    <li class="flex items-start text-gray-700">
+                      <Check class="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                      <span class="text-sm leading-relaxed">{beneficio}</span>
+                    </li>
+                  ))}
+                </ul>
+                
+                {/* Mostrar más beneficios si existen */}
+                {beneficios && beneficios.length > 5 && (
+                  <div class="mt-4 text-center">
+                    <span class="text-primary text-sm font-medium">
+                      +{beneficios.length - 5} beneficios más
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <!-- CTA -->
+              <a href="#contacto" class={`block w-full ${featured ? 'bg-gradient-to-r from-fuchsia-500 to-violet-600 hover:from-secondary/90 hover:to-primary/90' : 'bg-primary hover:bg-purple-700'} text-white text-center px-6 py-4 rounded-xl font-semibold hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300`}>
+                {cta}
+              </a>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="text-center bg-gray-50 p-8">
+      <h3 class="text-xl font-semibold text-gray-800 mb-3">
+        ¿No estás segura cuál elegir?
+      </h3>
+      <p class="text-gray-600 mb-6 max-w-xl mx-auto">
+        Agenda una consulta gratuita de 20 minutos y juntas encontraremos 
+        el camino de transformación que mejor se adapte a tu momento actual.
+      </p>
+      <a href="#contacto" class="inline-flex items-center text-primary hover:text-secondary font-medium hover:underline transition-colors duration-300">
+        <span>Agenda tu consulta gratuita</span>
+      </a>
+    </div>
+    
+  </div>
+</section>

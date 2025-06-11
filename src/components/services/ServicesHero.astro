@@ -1,9 +1,9 @@
 ---
 import "../../styles/global.css"
-import { Heart, Sparkles, MoveDown } from '@lucide/astro';
+import { Heart, Sparkles, MoveDown, CheckCircle } from '@lucide/astro';
 ---
 
-<section id="sobre-mi" class="relative min-h-screen bg-soft overflow-hidden">
+<section id="servicios" class="relative min-h-screen bg-soft overflow-hidden">
   <!-- Elementos decorativos de fondo -->
   <div class="absolute inset-0">
     <div class="absolute top-20 right-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
@@ -16,56 +16,71 @@ import { Heart, Sparkles, MoveDown } from '@lucide/astro';
       
       <!-- Contenido de texto -->
       <div class="space-y-8 text-center lg:text-left">
+        
         <!-- Badge de credibilidad -->
-        <div class="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm border border-gray-100">
-          <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-          <span class="text-sm font-medium text-gray-700">Psicóloga Certificada</span>
+        <div class="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-6 py-3 shadow-sm border border-gray-100">
+          <CheckCircle class="w-4 h-4 text-green-500" />
+          <span class="text-sm font-semibold text-gray-700">Psicóloga • Coach • Facilitadora</span>
         </div>
 
         <!-- Título principal -->
         <div class="space-y-4">
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-            ¡Nunca te adaptes
-            <span class="block text-primary">a lo que no</span>
-            <span class="block text-secondary">te hace feliz!</span>
+            Transforma tu vida
+            <span class="block text-primary">desde la raíz</span>
           </h1>
           
           <p class="text-lg md:text-xl text-gray-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
-            Hola, soy <strong>Carolina Trujillo</strong> y si estás aquí no es casualidad. 
-            Te recibo con mucho amor y gratitud en este espacio que he creado para que 
-            <strong>¡florezcamos junt@s!</strong>
+            Sanación emocional profunda a través de un enfoque integral que combina 
+            psicología, coaching transformacional y constelaciones familiares cuánticas.
           </p>
+        </div>
+
+        <!-- Beneficios clave -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-center lg:justify-start space-x-3">
+            <CheckCircle class="w-5 h-5 text-green-500 flex-shrink-0" />
+            <span class="text-gray-700 font-medium">Libera patrones que limitan tu vida</span>
+          </div>
+          <div class="flex items-center justify-center lg:justify-start space-x-3">
+            <CheckCircle class="w-5 h-5 text-green-500 flex-shrink-0" />
+            <span class="text-gray-700 font-medium">Reconecta con tu verdadero propósito</span>
+          </div>
+          <div class="flex items-center justify-center lg:justify-start space-x-3">
+            <CheckCircle class="w-5 h-5 text-green-500 flex-shrink-0" />
+            <span class="text-gray-700 font-medium">Sana tu sistema familiar</span>
+          </div>
         </div>
 
         <!-- Botones de acción -->
         <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
           <button 
-            onclick="document.getElementById('mi-historia').scrollIntoView({behavior: 'smooth'})"
+            onclick="document.getElementById('mis-servicios').scrollIntoView({behavior: 'smooth'})"
             class="w-full sm:w-auto bg-secondary text-white px-8 py-4 rounded-xl font-semibold hover:bg-pink-600 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center space-x-2"
           >
             <Heart class="w-5 h-5" />
-            <span>Conoce mi historia</span>
+            <span>Ver mis servicios</span>
           </button>
           
           <a href="#contacto" class="w-full sm:w-auto bg-white text-primary border-2 border-primary px-8 py-4 rounded-xl font-semibold hover:bg-primary hover:text-white hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center space-x-2">
             <Sparkles class="w-5 h-5" />
-            <span>Agenda tu sesión</span>
+            <span>Agendar consulta</span>
           </a>
         </div>
 
-        <!-- Estadísticas de transformación -->
+        <!-- Estadísticas de credibilidad -->
         <div class="grid grid-cols-3 gap-6 pt-8 border-t border-gray-200">
           <div class="text-center">
-            <div class="text-2xl md:text-3xl font-bold text-primary mb-1">2004</div>
-            <div class="text-sm text-gray-600">Psicóloga Titulada</div>
+            <div class="text-2xl md:text-3xl font-bold text-primary mb-1">500+</div>
+            <div class="text-sm text-gray-600">Vidas Transformadas</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl md:text-3xl font-bold text-primary mb-1">2018</div>
-            <div class="text-sm text-gray-600">Coach Internacional</div>
+            <div class="text-2xl md:text-3xl font-bold text-primary mb-1">21+</div>
+            <div class="text-sm text-gray-600">Años de Experiencia</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl md:text-3xl font-bold text-primary mb-1">2025</div>
-            <div class="text-sm text-gray-600">Constelaciones</div>
+            <div class="text-2xl md:text-3xl font-bold text-primary mb-1">98%</div>
+            <div class="text-sm text-gray-600">Satisfacción</div>
           </div>
         </div>
       </div>
@@ -80,23 +95,23 @@ import { Heart, Sparkles, MoveDown } from '@lucide/astro';
           <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl border-8 border-white">
             <img 
               src="/img/carolina-trujillo.jpg" 
-              alt="Carolina Trujillo - Psicóloga"
+              alt="Carolina Trujillo - Servicios de Transformación"
               class="w-full h-full object-cover"
             />
           </div>
 
-          <!-- Card flotante de información -->
+          <!-- Card flotante de servicios -->
           <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl p-6 shadow-xl border border-gray-100 max-w-xs">
             <div class="flex items-start space-x-4">
               <div class="w-12 h-12 gradient-soft rounded-xl flex items-center justify-center flex-shrink-0">
-                <Heart class="text-white" />
+                <Heart class="text-white w-6 h-6" />
               </div>
               <div>
-                <h3 class="font-bold text-gray-900 mb-1">Historia de Transformación</h3>
-                <p class="text-sm text-gray-600 mb-2">Cada desafío me llevó a recordar mi esencia</p>
+                <h3 class="font-bold text-gray-900 mb-1">Enfoque Integral</h3>
+                <p class="text-sm text-gray-600 mb-2">3 metodologías en 1</p>
                 <div class="flex items-center text-xs text-warm">
                   <Sparkles class="w-3 h-3 mr-1" fill="currentColor" />
-                  <span>Acompañamiento consciente</span>
+                  <span>Transformación Profunda</span>
                 </div>
               </div>
             </div>
@@ -113,10 +128,10 @@ import { Heart, Sparkles, MoveDown } from '@lucide/astro';
     <!-- Scroll indicator -->
     <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
       <button 
-        onclick="document.getElementById('mi-historia').scrollIntoView({behavior: 'smooth'})"
+        onclick="document.getElementById('mis-servicios').scrollIntoView({behavior: 'smooth'})"
         class="flex flex-col items-center text-gray-400 hover:text-primary transition-colors duration-300 cursor-pointer"
       >
-        <span class="text-sm font-medium mb-2">Mi Historia</span>
+        <span class="text-sm font-medium mb-2">Mis Servicios</span>
         <MoveDown class="w-6 h-6" />
       </button>
     </div>
